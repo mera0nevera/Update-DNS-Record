@@ -1,0 +1,64 @@
+package main
+
+import (
+  "fmt"
+  // "strings"
+  "Update-PTR-Record/module/fixdns"
+)
+
+
+func main() {
+
+  fmt.Print("Enter CIDR for PTR update -> ")
+  var CIDR string
+  _,_ = fmt.Scanln(&CIDR)
+  fmt.Println()
+
+  // CIDR := "185.120.69.0/24"
+
+  sshconfig := FixDNS.SSHConfig{
+    SSHUserName:                   "ruslan.krymtsov",
+    SSHKeyPass:                    "55442317",
+    PathToSSHKey:                  "/home/mera/.ssh/id_rsa",
+    PathToAccsessDeniedLogFile:    "accsess-denied.txt",
+  }
+
+  pdnsconfig := FixDNS.PDNSConfig{
+    HostName:                     "172.27.175.23",
+    ApiKey:                       "AORZQY80141Pfrk1",
+    NameServers:                  []string{"ns1.cloudevelops.cz", "ns2.cloudevelops.com"},
+    PathToDeadHostsLogFile:       "dead-hosts.txt",
+  }
+
+  // ssh := FixDNS.InitSSH(&sshconfig)
+  pdns := FixDNS.InitPowerDNS(&pdnsconfig)
+  // pdns.Records.PrintA(CIDR)
+  // pdns.Tools.MakeMeFeelGood(CIDR, &sshconfig)
+
+  fmt.Print("------------------------- HELP -------------------------\nP - print records\nE - update PTR record\n------------------------- HELP -------------------------\n")
+  fmt.Print("Enter mode: ")
+  var mode string
+  _,_ = fmt.Scanln(&mode)
+  fmt.Println()
+
+  switch mode {
+  case "P":
+    fmt.Print("------------------------- PRINT ------------------------\n\n")
+
+    fmt.Print("Record type (default: A): ")
+    var option string
+    _,_ = fmt.Scanln(&option)
+    switch mode {
+    default:
+      pdns.Records.PrintA(CIDR)
+      return
+    }
+
+  case "E":
+    fmt.Print("------------------------- EDIT -------------------------\n\n")
+    pdns.Tools.MakeMeFeelGood(CIDR, &sshconfig)
+  default:
+    fmt.Println("HELP MENU")
+    return
+  }
+}

@@ -1,0 +1,13 @@
+# SSH
+SSH:
+  User:                       "TEST-USER"
+  PSKey:                      "MY_PSKEY"
+  PathToKey:                  "/home/mera/.ssh/id_rsa"
+  PathToAccsessDeniedLogFile: "/logs/accsess-denied.txt"
+
+# PowerDNS
+PDNS:
+  Host:                        "172.27.175.23"
+  ApiKey:                      "PDNS_API_KEY"
+  NameServers:                 ["ns1.cloudevelops.cz", "ns2.cloudevelops.com"]
+  PathToDeadHostsLogFile:      "/logs/dead-hosts.txt"
